@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-class Ates {// Action her çalıştığında ateşimiz bir ileri gidecek
+class Ates {// Action her Ã§alÃ½Ã¾tÃ½Ã°Ã½nda ateÃ¾imiz bir ileri gidecek
 	private int x, y;
 
 	public Ates(int x, int y) {
@@ -47,59 +47,61 @@ class Ates {// Action her çalıştığında ateşimiz bir ileri gidecek
 }
 
 public class OyunPanel extends JPanel implements KeyListener, ActionListener {
-	Timer timer = new Timer(1, this);// Timer ilk değeri kaç milisaniyede bir çalışacağını belirtiyor
-	// ikincisi ise actionList this ile bizim yarattığımız action list her 1
-	// milisaniyede bir çalışacak
+	Timer timer = new Timer(1, this);// Timer ilk deÃ°eri kaÃ§ milisaniyede bir Ã§alÃ½Ã¾acaÃ°Ã½nÃ½ belirtiyor
+	// ikincisi ise actionList this ile bizim yarattÃ½Ã°Ã½mÃ½z action list her 1
+	// milisaniyede bir Ã§alÃ½Ã¾acak
 
 	private int gecenSure = 0, harcananAtes = 0;
 	private BufferedImage bfimage;
-	private ArrayList<Ates> atesler = new ArrayList<>();// Birden fazla ates olması ve bunların saklanması için
-	private int atesdirY = 3;// Ateşler x kordinatında hareketsiz ama y kordinatında her seferinde 1
-								// ekleyerek yukarı götürüyoruz
+	private ArrayList<Ates> atesler = new ArrayList<>();// Birden fazla ates olmasÃ½ ve bunlarÃ½n saklanmasÃ½ iÃ§in
+	private int atesdirY = 3;// AteÃ¾ler x kordinatÃ½nda hareketsiz ama y kordinatÃ½nda her seferinde 1
+								// ekleyerek yukarÃ½ gÃ¶tÃ¼rÃ¼yoruz
 
 	private int topX = 0;// Hedefin hareket etmesi
 	private int topdirX = 7;
-	private int uzayGemisiX = 0;// Uzay gemisinin panelde başlangıç noktası
-	private int dirUzayX = 20;// Uzay gemisi her hareket ettiğinde 20 birim gidecek
+	private int uzayGemisiX = 0;// Uzay gemisinin panelde baÃ¾langÃ½Ã§ noktasÃ½
+	private int dirUzayX = 20;// Uzay gemisi her hareket ettiÃ°inde 20 birim gidecek
 
-	public boolean kontrol() {// Burda bizim mermi ile top çarpıştı mı kontrol ediyoruz
+	public boolean kontrol() {// Burda bizim mermi ile top Ã§arpÃ½Ã¾tÃ½ mÃ½ kontrol ediyoruz
 		for (Ates ates : atesler) {
 			if (new Rectangle(ates.getX(), ates.getY(), 10, 20).intersects(new Rectangle(topX, 0, 30, 30))) {
 				return true;
-			} // Rectangle çarpışacak nesneleri dikdörtgen şeklinde sınırlarını çiziyoruz
-		} // eğer kesişme olurse bize true değer döndürecek
+			} // Rectangle Ã§arpÃ½Ã¾acak nesneleri dikdÃ¶rtgen Ã¾eklinde sÃ½nÃ½rlarÃ½nÃ½ Ã§iziyoruz
+		} // eÃ°er kesiÃ¾me olurse bize true deÃ°er dÃ¶ndÃ¼recek
 		return false;
 	}
 
 	public OyunPanel() {
 		try {
-			bfimage = ImageIO.read(new FileImageInputStream(new File("mekik.png")));// uzay gemisinin resmini aldık
+			bfimage = ImageIO.read(new FileImageInputStream(new File("mekik.png")));// uzay gemisinin resmini aldÃ½k
 		} catch (IOException e) {
 			Logger.getLogger(OyunPanel.class.getName()).log(Level.SEVERE, null, e);
 		}
 		setBackground(Color.black);
-		timer.start();// timer başlatıldı
+		timer.start();// timer baÃ¾latÃ½ldÃ½
 	}
 
 	@Override
-	public void paint(Graphics g) {// Şekillerimizi çizmek için çağırdık
+	public void paint(Graphics g) {// Ãekillerimizi Ã§izmek iÃ§in Ã§aÃ°Ã½rdÃ½k
 		super.paint(g);
 		gecenSure += 1;
 		g.setColor(Color.red);
-		g.fillOval(topX, 0, 30, 30);// topun kordinatı ve büyüklüğün verdik(20,20)
+		g.fillOval(topX, 0, 30, 30);// topun kordinatÃ½ ve bÃ¼yÃ¼klÃ¼Ã°Ã¼n verdik(20,20)
 		g.drawImage(bfimage, uzayGemisiX, 420, bfimage.getWidth() / 5, bfimage.getHeight() / 4, this);
-		// uzay gemisin konumu verdik//uzaygemisinin png boyutunu küçülttük//this ile bu
-		// panelde açılmasını sağladık
+		// uzay gemisin konumu verdik//uzaygemisinin png boyutunu kÃ¼Ã§Ã¼lttÃ¼k//this ile bu
+		// panelde aÃ§Ã½lmasÃ½nÃ½ saÃ°ladÃ½k
 
-		for (Ates ates : atesler) {// frameden çıkan ateşleri siliyoruz
+		for (Ates ates : atesler) {// frameden Ã§Ã½kan ateÃ¾leri siliyoruz
 			if (ates.getY() < 0) {
 				atesler.remove(ates);
 			}
 		}
-		// Bu şekilde mermi rengi sürekli değişiyor
-		int random = (int) (Math.random() * 5);
+		// Bu ÅŸekilde mermi rengi sÃ¼rekli deÄŸiÅŸiyor
+		Random rand = new Random();//Bu iki yolda rengi deÄŸiÅŸtir ama bu daha ksÄ±a alttakine gÃ¶re
+		g.setColor(new Color(rand.nextInt(255), rand.nextInt(255), rand.nextInt(255)));
+		/*int random =(int) (Math.random() * 5);
 		if (random == 0) {
-			g.setColor(Color.blue);// ateşin rengi
+			g.setColor(Color.blue);// ateÅŸin rengi
 		} else if (random == 1) {
 			g.setColor(Color.MAGENTA);
 		} else if (random == 2) {
@@ -108,38 +110,38 @@ public class OyunPanel extends JPanel implements KeyListener, ActionListener {
 			g.setColor(Color.lightGray);
 		} else if (random == 4) {
 			g.setColor(Color.PINK);
-		}
+		}*/
 
-		for (Ates ates : atesler) {// merminin şeklini oluşturduk
+		for (Ates ates : atesler) {// merminin Ã¾eklini oluÃ¾turduk
 			g.fillRect(ates.getX(), ates.getY(), 10, 20);
 		}
 
-		if (kontrol()) {// topu vurunca timerı kaptıp oyunu bittiriyoruz
+		if (kontrol()) {// topu vurunca timerÃ½ kaptÃ½p oyunu bittiriyoruz
 			timer.stop();
-			String msg = "Kazandınız..\n" + "Harcanan Ateş: " + harcananAtes + "\nGeçen Süre: " + gecenSure / 100.0
+			String msg = "KazandÃ½nÃ½z..\n" + "Harcanan AteÃ¾: " + harcananAtes + "\nGeÃ§en SÃ¼re: " + gecenSure / 100.0
 					+ " saniye";
-			JOptionPane.showMessageDialog(this, msg);// süre milisaniye onu bölüp saniye yaptık
+			JOptionPane.showMessageDialog(this, msg);// sÃ¼re milisaniye onu bÃ¶lÃ¼p saniye yaptÃ½k
 			System.exit(0);
 		}
 	}
 
 	@Override
-	public void repaint() {// Repaint her çağırdığımızda o da tekrar paintti çağırıyor
+	public void repaint() {// Repaint her Ã§aÃ°Ã½rdÃ½Ã°Ã½mÃ½zda o da tekrar paintti Ã§aÃ°Ã½rÃ½yor
 		super.repaint();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		for (Ates ates : atesler) {// Ateşelri y kordinatında hareket ettirmek için
+		for (Ates ates : atesler) {// AteÃ¾elri y kordinatÃ½nda hareket ettirmek iÃ§in
 			ates.setY(ates.getY() - atesdirY);
 		}
 
 		topX += topdirX;
 		if (topX >= 750) {
 			topdirX = -topdirX;
-		} // Top framein dışına çıkmasını engellemek ve frame sınıra gelince zıt yöne//
-			// hareket etmesi için negit ile çarpıyoruz
+		} // Top framein dÃ½Ã¾Ã½na Ã§Ã½kmasÃ½nÃ½ engellemek ve frame sÃ½nÃ½ra gelince zÃ½t yÃ¶ne//
+			// hareket etmesi iÃ§in negit ile Ã§arpÃ½yoruz
 		if (topX <= 0) {
 			topdirX = -topdirX;
 		}
@@ -152,9 +154,9 @@ public class OyunPanel extends JPanel implements KeyListener, ActionListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		int x = e.getKeyCode();// Bu bizim hangi tuşa bastığımızı alıcak
+		int x = e.getKeyCode();// Bu bizim hangi tuÃ¾a bastÃ½Ã°Ã½mÃ½zÃ½ alÃ½cak
 		if (x == KeyEvent.VK_LEFT) {
-			if (uzayGemisiX <= 0) {// frame sınır kontroll
+			if (uzayGemisiX <= 0) {// frame sÃ½nÃ½r kontroll
 				uzayGemisiX = 0;
 			} else {// hareket ettirmek
 				uzayGemisiX -= dirUzayX;
@@ -166,7 +168,7 @@ public class OyunPanel extends JPanel implements KeyListener, ActionListener {
 				uzayGemisiX += dirUzayX;
 			}
 		} else if (x == KeyEvent.VK_SPACE) {
-			atesler.add(new Ates(uzayGemisiX + 45, 415));// ateş tam uçtan çıkmazsa uzayGemisiX+ diyip bir değer
+			atesler.add(new Ates(uzayGemisiX + 45, 415));// ateÃ¾ tam uÃ§tan Ã§Ã½kmazsa uzayGemisiX+ diyip bir deÃ°er
 															// ekleyebilirsin
 			harcananAtes++;
 		}
